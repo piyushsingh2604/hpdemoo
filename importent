@@ -1,0 +1,48 @@
+import 'package:dio/dio.dart';
+
+class ApiService {
+  final Dio _dio = Dio();
+
+  // Replace with your actual authentication token
+
+  Future<void> deleteDiscussion(String discussionId) async {
+    const String url = 'https://testapi.parliament.health/DeleteDiscussion';
+
+    try {
+      // Set headers with the authentication token
+      _dio.options.headers = {
+        'Authorization': 'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjhiMDE4MDIyLTdmYzAtNDNhNi1iZDBjLTM5MzVkODc1ZGUyMyIsInN1YiI6Ikc2NDJuOVFzTlp0OUZpVHVwQzY1azZRTWpTSlQxRkVJU3F6MjA2ZEF5aTg9IiwiZW1haWwiOiJraXJhbi5zYXdhbnRAYW5qaXRhaXQuY29tIiwianRpIjoiNWI0YmE4NzAtZWIwMC00MWIyLWFjYjMtNDZmMmUzN2UxNDUzIiwibmJmIjoxNzMzMzkyNTExLCJleHAiOjE3NjQ5Mjg1MTEsImlhdCI6MTczMzM5MjUxMSwiaXNzIjoiaHR0cDovL2FkbWluLnBhcmxpYW1lbnQuaGVhbHRoLyIsImF1ZCI6Imh0dHA6Ly9hZG1pbi5wYXJsaWFtZW50LmhlYWx0aC8ifQ.wWz1UUrMBSKehZtZURSMYQCnJmRSKjeEraDr5O_yHSU2DRPLwQ9uZ_DsBleFX3LJjQhrwmziV8xKjSS3SWlDOA',
+        'Content-Type': 'application/json',
+      };
+
+      // Send DELETE request with the body
+      Response response = await _dio.post(
+        url,
+        data: {
+          'id': discussionId,
+        },
+      );
+
+      // Check the response status
+      if (response.statusCode == 200) {
+        print('Discussion deleted successfully');
+      } else {
+        print('Failed to delete discussion: ${response.data}');
+      }
+    } catch (e) {
+      print('Error occurred while deleting discussion: $e');
+    }
+  }
+}
+//
+
+  void deleteDiscussionFunction(String deleteId) {
+    ApiService services = ApiService();
+
+    services.deleteDiscussion(deleteId);
+  }
+  //
+    onTap: (){
+                                                  controller
+                                                      .deleteDiscussionFunction(data.discussionId!);
+                                            },
